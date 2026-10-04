@@ -8,7 +8,7 @@ from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib.utils import simpleSplit
 from reportlab.pdfgen import canvas
 
-st.set_page_config(page_title="Thank You, Teacher", page_icon="🍎", layout="centered")
+st.set_page_config(page_title="Thank You, Teacher", page_icon="📚", layout="centered", initial_sidebar_state="collapsed")
 
 DESIGNER = "Waheed Ali Hamouzai"
 FONT_URL = (
@@ -319,6 +319,18 @@ CARD_CSS = """
 @keyframes tw{0%,100%{opacity:.35;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
 @media (prefers-reduced-motion:reduce){.board,.board *{animation:none!important}}
 @media print{.board,.board *{animation:none!important}.board{transform:none;box-shadow:none}}
+@media (max-width:640px){
+.board{border-width:9px;padding:1.4rem .9rem 0;overflow-wrap:anywhere}
+.board .ribbon{font-size:.68rem;padding:.3rem .7rem}
+.board .head{font-size:calc(2.3rem*var(--k))}
+.board .to{font-size:calc(1.6rem*var(--k))}
+.board .msg{font-size:calc(1.4rem*var(--k))}
+.board .hadith{padding:.7rem .8rem}
+.board .hadith .q{font-size:calc(1.25rem*var(--k))}
+.board .from{font-size:calc(1.5rem*var(--k))}
+.board .tray{margin:1rem -.9rem 0;flex-wrap:wrap;gap:.3rem;font-size:.7rem}
+.board .tape{width:80px;height:20px}
+}
 """
 
 PAGE_CSS = f"""
@@ -328,6 +340,7 @@ html, body, [class*="css"], .stApp {{ font-family:'Nunito',sans-serif; }}
 #MainMenu, footer, header {{ visibility:hidden; }}
 .block-container {{ max-width:760px; padding-top:1.8rem; }}
 .hero {{ text-align:center; margin-bottom:1.2rem; }}
+.hero .icon {{ font-size:3rem; line-height:1.1; }}
 .hero .pill {{ display:inline-block; background:#1E3B2C; color:#F0B429; font-weight:800; font-size:.8rem;
   padding:.3rem 1rem; border-radius:20px; margin-bottom:.5rem; }}
 .hero h1 {{ font-family:'Caveat',cursive; font-size:3.6rem; color:#1E3B2C; margin:0; line-height:1; }}
@@ -342,6 +355,15 @@ div[data-testid="stForm"] {{ background:#fff; border:2px solid #1E3B2C; border-r
 .note b {{ color:#1E3B2C; }}
 .credit {{ text-align:center; margin:2.2rem 0 .5rem; color:#3d5246; font-size:.9rem; }}
 .credit b {{ color:#1E3B2C; }}
+html, body, .stApp {{ overflow-x:hidden; }}
+div[role="radiogroup"] label {{ padding:.25rem 0; }}
+@media (max-width:640px) {{
+  .block-container {{ padding:1rem .8rem 3rem !important; }}
+  .hero h1 {{ font-size:2.7rem; }}
+  div[data-testid="stForm"] {{ padding:.9rem .8rem; }}
+  .stButton > button, .stFormSubmitButton > button, .stDownloadButton > button {{ min-height:3.2rem; font-size:1rem; }}
+  input, textarea, [data-baseweb="select"] {{ font-size:16px !important; }}
+}}
 {CARD_CSS}
 """
 st.markdown(f"<style>{PAGE_CSS}</style>", unsafe_allow_html=True)
@@ -397,7 +419,7 @@ def card_file(w):
     return f"""<!doctype html><html><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Teachers' Day Card</title><link href="{FONT_URL}" rel="stylesheet">
-<style>body{{background:#E9F0EA;margin:0;padding:1.5rem;font-family:sans-serif}}.wrap{{max-width:660px;margin:auto}}
+<style>body{{background:#E9F0EA;margin:0;padding:1.5rem;font-family:sans-serif}}.wrap{{max-width:660px;margin:auto}}@media(max-width:640px){{body{{padding:.7rem}}}}
 .pdfbtn{{display:block;margin:0 auto 1rem;padding:.6rem 1.4rem;background:#F0B429;color:#1E3B2C;border:2px solid #1E3B2C;
 border-radius:8px;font-weight:800;cursor:pointer}}
 @media print{{.pdfbtn{{display:none}}body{{background:#fff;padding:0}}*{{-webkit-print-color-adjust:exact;print-color-adjust:exact}}}}
@@ -465,6 +487,7 @@ def card_pdf(w):
 # ---------- Page ----------
 st.markdown(
     """<div class="hero">
+<div class="icon">📚</div>
 <div class="pill">5 OCTOBER &nbsp;|&nbsp; WORLD TEACHERS' DAY</div>
 <h1>Say thank you to your teacher</h1>
 <p>Pick a language, a writing style and a card colour. Get a card with a heartfelt message and a hadith on honouring teachers.</p>
