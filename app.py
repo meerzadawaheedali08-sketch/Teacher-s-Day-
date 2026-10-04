@@ -34,6 +34,7 @@ NOTEBOOK_LINES = "repeating-linear-gradient(transparent 0 31px, rgba(60,100,170,
 STARS = ("radial-gradient(1.5px 1.5px at 20% 30%,#fff 50%,transparent),radial-gradient(1px 1px at 70% 20%,#fff 50%,transparent),"
          "radial-gradient(1.5px 1.5px at 85% 70%,#fff 50%,transparent),radial-gradient(1px 1px at 40% 80%,#fff 50%,transparent),"
          "radial-gradient(1px 1px at 10% 60%,#fff 50%,transparent),radial-gradient(1.5px 1.5px at 55% 45%,#fff 50%,transparent)")
+
 THEMES = {
     "Classic chalkboard": dict(bg="#1E3B2C", fg="#F4F2E8", accent="#F0B429", frame="#8B5E3C", soft="#2B503D", tray="#F4F2E8", img="none"),
     "Pakistan green": dict(bg="#01411C", fg="#FFFFFF", accent="#CFE8D3", frame="#E8F1EA", soft="#0B5A2E", tray="#01411C", img="none"),
@@ -46,6 +47,7 @@ THEMES = {
     "Rose garden": dict(bg="#FCE9EE", fg="#5B1F33", accent="#B3174F", frame="#B3174F", soft="#F7D3DD", tray="#FFFFFF", img="none"),
     "Starry night": dict(bg="#0A0F24", fg="#EEF1FF", accent="#FFE08A", frame="#26336B", soft="#141C42", tray="#EEF1FF", img=STARS),
 }
+
 HONORIFICS = {"Sir": "سر", "Miss": "مس", "Madam": "میڈم", "Ustad ji": "استاد جی", "Ustani ji": "استانی جی", "Name only": ""}
 
 LANG_TEXT = {
@@ -293,7 +295,7 @@ CARD_CSS = """
 .board .from{font-size:calc(1.8rem*var(--k));color:var(--accent);text-align:right;margin-top:.8rem;line-height:1.2}
 .board .from small{display:block;font-size:calc(1.15rem*var(--k));color:var(--fg);opacity:.8}
 .board .tray{background:var(--frame);color:var(--tray);margin:1.1rem -1.6rem 0;padding:.45rem 1rem;display:flex;
-  justify-content:space-between;align-items:center;font-family:'Nunito',sans-serif;font-size:.78rem}
+  justify-space-between;align-items:center;font-family:'Nunito',sans-serif;font-size:.78rem}
 .board .tray .chalk{display:inline-block;width:26px;height:8px;background:#fff;border-radius:2px;margin-right:6px}
 .board .tray .chalk.y{background:#F0B429}
 .board.ur .msg,.board.ur .hadith{direction:rtl}
@@ -357,12 +359,38 @@ div[data-testid="stForm"] {{ background:#fff; border:2px solid #1E3B2C; border-r
 .credit b {{ color:#1E3B2C; }}
 html, body, .stApp {{ overflow-x:hidden; }}
 .step {{ font-family:'Caveat',cursive; font-size:1.8rem; color:#1E3B2C; margin:1.3rem 0 .3rem; }}
-.fchips {{ display:flex; flex-wrap:wrap; gap:.4rem; margin:.2rem 0 .8rem; }}
-.fchip {{ border:2px solid #cfdacf; border-radius:8px; padding:.25rem .7rem; background:#fff; text-align:center;
-  line-height:1.5; color:#1E3B2C; }}
-.fchip small {{ display:block; font:600 .65rem 'Nunito',sans-serif; color:#5b6f62; }}
-.fchip.on {{ border-color:#1E3B2C; background:#FFF1C7; }}
-div[role="radiogroup"] label {{ padding:.25rem 0; }}
+
+/* Card / Chooser Choosen Buttons Styling */
+div[role="radiogroup"] {{
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    justify-content: center !important;
+    margin-bottom: 1rem !important;
+}}
+div[role="radiogroup"] > label {{
+    background-color: #FFFFFF !important;
+    border: 2px solid #1E3B2C !important;
+    border-radius: 12px !important;
+    padding: 8px 16px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important;
+}}
+div[role="radiogroup"] > label:hover {{
+    background-color: #FFF1C7 !important;
+    transform: translateY(-2px) !important;
+}}
+div[role="radiogroup"] > label[data-checked="true"] {{
+    background-color: #1E3B2C !important;
+    color: #F0B429 !important;
+    border-color: #1E3B2C !important;
+    font-weight: bold !important;
+}}
+div[role="radiogroup"] > label[data-checked="true"] p {{
+    color: #F0B429 !important;
+}}
+
 @media (max-width:640px) {{
   .block-container {{ padding:1rem .8rem 3rem !important; }}
   .hero h1 {{ font-size:2.7rem; }}
@@ -496,117 +524,121 @@ TONE_LABEL = {"Heartfelt": "💖 Heartfelt", "Funny": "😄 Funny", "Short and s
 THEME_ICON = {
     "Classic chalkboard": "🟢", "Pakistan green": "🇵🇰", "Midnight and gold": "🔵", "Maroon and gold": "🔴",
     "School notebook": "📒", "Vintage parchment": "📜", "Royal purple": "🟣", "Ocean teal": "🌊",
-    "Rose garden": "🌸", "Starry night": "🌌",
+    "Rose garden": "🌹", "Starry night": "🌌"
 }
-OWN = "✍️ Write my own wish"
 
+# Hero Section
+st.markdown("""
+<div class="hero">
+  <div class="icon">📚</div>
+  <div class="pill">WORLD TEACHERS' DAY</div>
+  <h1>Thank You, Teacher!</h1>
+  <p>Create a beautiful, personalized chalkboard card to honor your teacher on World Teachers' Day.</p>
+</div>
+""", unsafe_allow_html=True)
 
-def step(text):
-    st.markdown(f'<div class="step">{text}</div>', unsafe_allow_html=True)
+# Main Inputs Form
+with st.form("card_form"):
+    st.markdown("<div class='step'>1. Choose Language</div>", unsafe_allow_html=True)
+    lang = st.radio(
+        "Select Language",
+        options=LANGUAGES,
+        format_func=lambda x: LANG_LABEL.get(x, x),
+        horizontal=True,
+        label_visibility="collapsed"
+    )
 
+    st.markdown("<div class='step'>2. Choose Tone</div>", unsafe_allow_html=True)
+    tone = st.radio(
+        "Select Tone",
+        options=TONES,
+        format_func=lambda x: TONE_LABEL.get(x, x),
+        horizontal=True,
+        label_visibility="collapsed"
+    )
 
-def font_chips(selected, lang):
-    chips = ""
-    for name, (fam, k, ufam, *_rest) in FONT_STYLES.items():
-        ur = lang == "Urdu"
-        sample = "شکریہ" if ur else "Thank you"
-        size = 1.3 * (0.8 if ur else k * 1.25)
-        chips += (f'<span class="fchip{" on" if name == selected else ""}" '
-                  f'style="font-family:{ufam if ur else fam};font-size:{size:.2f}rem">{sample}<small>{name}</small></span>')
-    return f'<div class="fchips">{chips}</div>'
+    st.markdown("<div class='step'>3. Teacher & Student Details</div>", unsafe_allow_html=True)
+    c1, c2 = st.columns(2)
+    with c1:
+        honorific = st.selectbox("Honorific", list(HONORIFICS.keys()))
+        teacher_name = st.text_input("Teacher's Name", placeholder="e.g. Ahmad Khan")
+    with c2:
+        student_name = st.text_input("Your Name", placeholder="e.g. Ali")
+        school_name = st.text_input("School / College (Optional)", placeholder="e.g. GBHS Usta Muhammad")
 
+    extra_note = st.text_input("P.S. Extra Personal Note (Optional)", placeholder="e.g. Thanks for helping with Physics!")
 
-def new_options(lang, tone, t, n=4):
-    pool, tries = [], 0
-    while len(pool) < n and tries < 80:
-        m = compose(lang, tone, t)
-        if m not in pool:
-            pool.append(m)
-        tries += 1
-    return pool
+    st.markdown("<div class='step'>4. Choose Styling</div>", unsafe_allow_html=True)
+    f1, f2 = st.columns(2)
+    with f1:
+        font_style = st.selectbox("Font Style", list(FONT_STYLES.keys()))
+    with f2:
+        theme_style = st.selectbox("Board Theme", list(THEMES.keys()), format_func=lambda x: f"{THEME_ICON.get(x, '🎨')} {x}")
 
+    submitted = st.form_submit_button("✨ Generate Card ✨", use_container_width=True)
 
-def card_section(student, school, honor, teacher, lang, tone, font, theme):
-    if lang == "Urdu":
-        t = f"{HONORIFICS[honor]} {teacher.strip()}".strip()
+if submitted:
+    if not teacher_name.strip() or not student_name.strip():
+        st.error("Please enter both Teacher's Name and Your Name.")
     else:
-        t = teacher.strip() if honor == "Name only" else f"{honor} {teacher.strip()}"
+        # Build Teacher Name with Honorific
+        h_val = HONORIFICS[honorific]
+        if lang == "Urdu" and h_val:
+            full_teacher = f"{h_val} {teacher_name.strip()}"
+        elif h_val and honorific != "Name only":
+            full_teacher = f"{honorific} {teacher_name.strip()}"
+        else:
+            full_teacher = teacher_name.strip()
 
-    sig = (lang, tone, t)
-    if st.session_state.get("sig") != sig:
-        st.session_state.update(sig=sig, opts=new_options(lang, tone, t), gen=st.session_state.get("gen", 0) + 1)
+        h_choice = random.choice(HADITHS)
 
-    def more():
-        st.session_state.update(opts=new_options(lang, tone, t), gen=st.session_state["gen"] + 1)
+        st.session_state["wish"] = {
+            "lang": lang,
+            "tone": tone,
+            "t": full_teacher,
+            "student": student_name.strip(),
+            "school": school_name.strip(),
+            "extra": extra_note.strip(),
+            "font": font_style,
+            "theme": theme_style,
+            "msg": compose(lang, tone, full_teacher),
+            "hadith_text": h_choice["text"][lang],
+            "hadith_ref": h_choice["ref"][lang],
+        }
 
-    step("4. Choose your wish")
-    opts = st.session_state["opts"]
-    pick = st.radio("Wish", opts + [OWN], key=f"pick_{st.session_state['gen']}", label_visibility="collapsed")
-    st.button("🔄 Show different wishes", on_click=more, use_container_width=True)
-    msg = opts[0]
-    if pick == OWN:
-        own = st.text_area("Your own wish", max_chars=400, placeholder="Write a message from your heart")
-        msg = own.strip() or opts[0]
-    else:
-        msg = pick
-    extra = st.text_input("Add one more line at the end (optional)", max_chars=140, placeholder="e.g. I will never forget your Friday quizzes")
+# Display Generated Card & Controls
+if "wish" in st.session_state:
+    w = st.session_state["wish"]
 
-    h = HADITHS[st.session_state["gen"] % len(HADITHS)]  # changes whenever new wishes are shown
-    w = dict(student=student, school=school, t=t, lang=lang, tone=tone, font=font, theme=theme, extra=extra,
-             msg=msg, hadith_text=h["text"][lang], hadith_ref=h["ref"][lang])
+    st.markdown("---")
+    st.components.v1.html(card_html(w), height=620, scrolling=True)
 
-    step("5. Your card")
-    st.markdown(card_html(w), unsafe_allow_html=True)
-    st.write("")
-    if lang == "Urdu":
-        st.download_button("Download card (web page)", card_file(w), "teachers_day_card.html", "text/html", use_container_width=True)
-        st.info("For a PDF of an Urdu card: open the downloaded web page and press the Save as PDF button on top.")
-    else:
-        d1, d2 = st.columns(2)
-        d1.download_button("Download as PDF", card_pdf(w), "teachers_day_card.pdf", "application/pdf", use_container_width=True)
-        d2.download_button("Download as web page", card_file(w), "teachers_day_card.html", "text/html", use_container_width=True)
-    if st.button("🎈 Post my thanks to the wishes wall", use_container_width=True):
-        wall().append({"student": student.strip(), "t": t})
-        st.balloons()
+    col_btn1, col_btn2 = st.columns(2)
+    with col_btn1:
+        st.button("🔄 Shuffle Message / Reroll", on_click=reroll, use_container_width=True)
+    with col_btn2:
+        st.download_button(
+            label="📥 Download PDF Card",
+            data=card_pdf(w),
+            file_name=f"Teachers_Day_Card_{w['student']}.pdf",
+            mime="application/pdf",
+            use_container_width=True,
+        )
 
+    # Post to Wall
+    if st.button("📌 Share on Public Wall", use_container_width=True):
+        wall().append(w)
+        st.success("Card posted on the public wall below!")
 
-st.markdown(
-    """<div class="hero">
-<div class="icon">📚</div>
-<div class="pill">5 OCTOBER &nbsp;|&nbsp; WORLD TEACHERS' DAY</div>
-<h1>Say thank you to your teacher</h1>
-<p>Choose everything yourself and watch the card change as you go.</p>
-</div>""",
-    unsafe_allow_html=True,
-)
+# Public Wall Section
+if wall():
+    st.markdown("<div class='wall-title'>🌟 Public Teachers' Day Wall</div>", unsafe_allow_html=True)
+    for entry in reversed(wall()):
+        st.markdown(f"""
+        <div class="note">
+            <b>To {esc(entry['t'])}:</b> "{esc(entry['msg'])}" — <i>From {esc(entry['student'])}</i>
+        </div>
+        """, unsafe_allow_html=True)
 
-step("1. About you and your teacher")
-c1, c2 = st.columns(2)
-student = c1.text_input("Your name", placeholder="e.g. Hamza Ali")
-school = c2.text_input("Class or school (optional)", placeholder="e.g. Class 9, Government High School")
-c3, c4 = st.columns([1, 2])
-honor = c3.selectbox("You call your teacher", list(HONORIFICS))
-teacher = c4.text_input("Teacher's name", placeholder="e.g. Ahmed")
-
-step("2. Language and message style")
-lang = st.pills("Card language", LANGUAGES, default="English", format_func=LANG_LABEL.get, key="lang") or "English"
-tone = st.pills("Message style", TONES, default="Heartfelt", format_func=TONE_LABEL.get, key="tone") or "Heartfelt"
-
-step("3. Look of your card")
-font = st.pills("Writing style", list(FONT_STYLES), default="Chalk handwriting", key="font") or "Chalk handwriting"
-st.markdown(font_chips(font, lang), unsafe_allow_html=True)
-theme = st.pills("Card colours", list(THEMES), default="Classic chalkboard", format_func=lambda k: f"{THEME_ICON[k]} {k}", key="theme") or "Classic chalkboard"
-
-if student.strip() and teacher.strip():
-    card_section(student, school, honor, teacher, lang, tone, font, theme)
-else:
-    st.info("Enter your name and your teacher's name above. Wishes and your card will appear right here.")
-
-st.markdown('<div class="wall-title">Wishes so far</div>', unsafe_allow_html=True)
-recent = wall()[-12:][::-1]
-if not recent:
-    st.caption("No wishes yet. Yours can be the first.")
-for n in recent:
-    st.markdown(f'<div class="note"><b>{esc(n["student"])}</b> thanked {esc(n["t"])}</div>', unsafe_allow_html=True)
-
-st.markdown(f'<div class="credit">Designed by <b>{DESIGNER}</b></div>', unsafe_allow_html=True)
+# Footer Credit
+st.markdown(f'<div class="credit">Designed with ❤️ by <b>{DESIGNER}</b></div>', unsafe_allow_html=True)
