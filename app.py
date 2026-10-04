@@ -31,12 +31,20 @@ FONT_STYLES = {
 }
 
 NOTEBOOK_LINES = "repeating-linear-gradient(transparent 0 31px, rgba(60,100,170,.22) 31px 32px)"
+STARS = ("radial-gradient(1.5px 1.5px at 20% 30%,#fff 50%,transparent),radial-gradient(1px 1px at 70% 20%,#fff 50%,transparent),"
+         "radial-gradient(1.5px 1.5px at 85% 70%,#fff 50%,transparent),radial-gradient(1px 1px at 40% 80%,#fff 50%,transparent),"
+         "radial-gradient(1px 1px at 10% 60%,#fff 50%,transparent),radial-gradient(1.5px 1.5px at 55% 45%,#fff 50%,transparent)")
 THEMES = {
     "Classic chalkboard": dict(bg="#1E3B2C", fg="#F4F2E8", accent="#F0B429", frame="#8B5E3C", soft="#2B503D", tray="#F4F2E8", img="none"),
     "Pakistan green": dict(bg="#01411C", fg="#FFFFFF", accent="#CFE8D3", frame="#E8F1EA", soft="#0B5A2E", tray="#01411C", img="none"),
     "Midnight and gold": dict(bg="#14213D", fg="#F1F3F8", accent="#E5B84B", frame="#A67C2E", soft="#1F3159", tray="#FFFFFF", img="none"),
     "Maroon and gold": dict(bg="#4A1420", fg="#FBF1E4", accent="#E3B964", frame="#2B0B12", soft="#5E2230", tray="#FBF1E4", img="none"),
     "School notebook": dict(bg="#FBFBF7", fg="#1F2A44", accent="#B5342A", frame="#1F2A44", soft="#EEF1F8", tray="#FFFFFF", img=NOTEBOOK_LINES),
+    "Vintage parchment": dict(bg="#EFE0BD", fg="#3E2A18", accent="#9A2E1C", frame="#5C3B1E", soft="#E4D2A8", tray="#F5E9CC", img="none"),
+    "Royal purple": dict(bg="#2D1B4E", fg="#F5EEFF", accent="#F5C16C", frame="#C9A24B", soft="#3D2A63", tray="#2D1B4E", img="none"),
+    "Ocean teal": dict(bg="#0B3C49", fg="#EAF7F7", accent="#FFD166", frame="#DCEBEC", soft="#145263", tray="#0B3C49", img="none"),
+    "Rose garden": dict(bg="#FCE9EE", fg="#5B1F33", accent="#B3174F", frame="#B3174F", soft="#F7D3DD", tray="#FFFFFF", img="none"),
+    "Starry night": dict(bg="#0A0F24", fg="#EEF1FF", accent="#FFE08A", frame="#26336B", soft="#141C42", tray="#EEF1FF", img=STARS),
 }
 HONORIFICS = {"Sir": "سر", "Miss": "مس", "Madam": "میڈم", "Ustad ji": "استاد جی", "Ustani ji": "استانی جی", "Name only": ""}
 
@@ -46,47 +54,195 @@ LANG_TEXT = {
     "Urdu": dict(ribbon="عالمی یومِ اساتذہ  |  ۵ اکتوبر", head="عالمی یومِ اساتذہ مبارک", to="{t} کے نام", ps="نوٹ:", hl="حدیث:"),
 }
 
-MESSAGES = {
+PARTS = {
     "English": {
         "Heartfelt": [
-            "Dear {t}, thank you for teaching me not just lessons, but patience, honesty and self-belief. Whatever I achieve in life will carry a little of your effort and your duas. Happy World Teachers' Day!",
-            "{t}, you saw something in me before I did. Thank you for every correction, every encouragement and every minute you gave beyond the syllabus. Happy Teachers' Day!",
+            [
+                "Dear {t}, on this World Teachers' Day I want to say what I do not say often enough: thank you.",
+                "{t}, some people walk into our lives and quietly change the direction of our future. For me, that person is you.",
+                "Respected {t}, today I am not thinking about exams or marks, only about everything you have done for me.",
+                "To my dear teacher {t}: thank you for being the first person who made me believe I could do more.",
+                "Dear {t}, a teacher's work is never really finished, and neither is our gratitude, so I am saying it again today.",
+            ],
+            [
+                "You taught us the lesson in the book and, far more importantly, the lesson of patience, honesty and hard work.",
+                "You never gave up on me, even on the days when I had given up on myself, and that has stayed with me.",
+                "Every correction you made came with care, and I understand now that your strictness was only your way of loving us.",
+                "You stayed back after the bell, explained the same thing again and again, and never once made me feel small.",
+                "Because of you, I stopped being afraid of asking questions, and that changed the way I learn and the way I think.",
+                "The values you showed us in the classroom, kindness, discipline and respect, are things no exam can measure.",
+                "Whatever I become in life, a little part of your effort and your duas will always be in it.",
+            ],
+            [
+                "May Allah reward you for every child you have guided, and keep you healthy, respected and happy always.",
+                "I promise to make you proud, and to pass on what you gave me to others. Happy Teachers' Day!",
+                "You will always have my respect and my duas. Happy World Teachers' Day, and thank you for everything.",
+                "Thank you for lighting the way. Wishing you a day as bright as the future you helped us build.",
+                "With love, respect and endless gratitude, I wish you a very happy Teachers' Day.",
+            ],
         ],
         "Funny": [
-            "Dear {t}, thank you for believing in us even when we forgot our homework (again). Class would be incomplete without you. Happy Teachers' Day!",
-            "{t}, thank you for staying calm when we said the dog ate our notebook. You are the real hero of every class. Happy Teachers' Day!",
-        ],
-        "Short and sweet": [
-            "Some people teach lessons, you taught life. Thank you, {t}. Happy Teachers' Day!",
-            "A good teacher lights a thousand candles without losing a single flame. Thank you, {t}!",
+            [
+                "Dear {t}, I have been planning this message for days, mostly because I could not find a way to say thank you without sounding like I am asking for extra marks.",
+                "{t}, breaking news: your students have finally noticed that you were right all along.",
+                "Dear {t}, the whole class asked me to write this, and by the whole class I mean me, because everyone else was busy copying homework.",
+                "Respected {t}, on Teachers' Day we promise to be good students for at least the next twenty-four hours.",
+            ],
+            [
+                "Thank you for staying calm when we said the dog ate our notebook, the van was late and the internet was down, all in one week.",
+                "Thank you for pretending not to notice the whispering at the back, and for knowing exactly when to turn around.",
+                "You somehow make even the most boring chapter bearable, and that is a talent no textbook can teach.",
+                "Your red pen has seen things, and yet you still smile when you hand back our copies.",
+                "You explained the same topic five times without sighing even once, which honestly deserves an award.",
+                "You know every excuse in the book and still give us another chance, so we think you might be a superhero.",
+            ],
+            [
+                "Class would be incomplete without you. Happy Teachers' Day, and please keep the surprise tests to a minimum.",
+                "We promise to listen more, talk less and write neater. Happy World Teachers' Day!",
+                "Thank you for everything, and for not reading too much into our handwriting. Happy Teachers' Day!",
+                "Stay awesome, stay strict only when needed, and have a wonderful Teachers' Day!",
+            ],
         ],
     },
     "Roman Urdu": {
         "Heartfelt": [
-            "Respected {t}, aap ne sirf parhaya nahi, zindagi jeena bhi sikhaya. Aap ki mehnat, sabr aur duaon ki wajah se aaj main apne khwab dekhne ke qabil hoon. Teachers' Day mubarak!",
-            "{t}, aap ka diya hua ilm hamari sab se bari daulat hai. Shukriya har sabaq ke liye, aur un sab dantoon ke liye jo hamare bhale ke liye thin. Teachers' Day mubarak!",
+            [
+                "Respected {t}, World Teachers' Day par dil ki ek hi baat hai: shukriya, bohat bohat shukriya.",
+                "{t}, kuch log zindagi mein aate hain aur khamoshi se hamara mustaqbil badal dete hain. Mere liye woh aap hain.",
+                "Dear {t}, aaj exams ya marks ki nahi, sirf un sab meharbaniyon ki baat hai jo aap ne mujh par ki.",
+                "Mohtaram {t}, aap ne sab se pehle mujhe yaqeen dilaya ke mujh mein bohat kuch karne ki salahiyat hai.",
+            ],
+            [
+                "Aap ne kitab ka sabaq to parhaya hi, magar us se bhi zyada sabr, imaandari aur mehnat ka sabaq sikhaya.",
+                "Jin dinon mein mujhe khud par bharosa nahi raha, un dinon mein bhi aap ne mujh par yaqeen rakha.",
+                "Aap ki har tokne mein fikr thi, aur ab samajh aaya ke aap ki sakhti dar asal aap ki mohabbat thi.",
+                "Chhutti ke baad ruk kar, ek hi baat baar baar samjha kar, aap ne kabhi mujhe chhota mehsoos nahi hone diya.",
+                "Aap ki wajah se sawal poochne ka darr khatam hua, aur isi ne meri sochne aur seekhne ki rah badal di.",
+                "Main jo bhi banoon, us mein aap ki mehnat aur aap ki duaon ka ek hissa hamesha shamil hoga.",
+            ],
+            [
+                "Allah aap ko har us bachche ke badle ajar de jis ki aap ne rehnumai ki, aur aap ko sehat, izzat aur khushiyan ata farmaye.",
+                "Wada hai ke aap ko fakhar ka mauqa deta rahoon aur jo aap se paaya woh doosron tak pohanchata rahoon. Teachers' Day mubarak!",
+                "Aap ke liye hamesha izzat aur duain. World Teachers' Day mubarak, aur har cheez ka shukriya.",
+                "Mohabbat, izzat aur be-intiha shukriye ke saath, aap ko Teachers' Day bohat bohat mubarak ho.",
+            ],
         ],
         "Funny": [
-            "Respected {t}, homework kam dene ki darkhwast apni jagah, magar sach yeh hai ke aap ke baghair hamari class adhoori hai. Teachers' Day mubarak!",
-            "{t}, aap ki sab se mushkil khoobi yeh hai ke sawal ka jawab na aane par bhi hamein muskura kar sambhal lete hain. Teachers' Day mubarak!",
-        ],
-        "Short and sweet": [
-            "Jo chiragh ban kar jalte hain, wohi ustad kehlate hain. {t}, aap ko Teachers' Day mubarak!",
+            [
+                "Dear {t}, kai din se yeh message likhne ka soch rahe thay, kyun ke extra marks maangay baghair shukriya kehna bohat mushkil hai.",
+                "{t}, breaking news: aap ke students ko aakhir maloom ho gaya ke aap hamesha sahi thay.",
+                "Respected {t}, poori class ne yeh likhwaya hai, aur poori class se meri murad main hoon, kyun ke baaqi sab homework copy karne mein masroof thay.",
+            ],
+            [
+                "Shukriya jab hum ne kaha ke kutte ne copy kha li, van late thi aur internet band tha, woh bhi ek hi hafte mein, aur aap phir bhi pur-sukoon rahe.",
+                "Shukriya ke aap ne piche ki seat par hone wali sargoshiyon ko nazar-andaz kiya, aur hamesha theek waqt par palat kar dekha.",
+                "Sab se boring chapter ko bhi aap bardasht ke qabil bana dete hain, aur yeh woh hunar hai jo kisi kitab mein nahi milta.",
+                "Aap ne ek hi topic panch baar samjhaya aur ek baar bhi aah nahi bhari, is par to inaam banta hai.",
+                "Aap hamari har bahane-baazi jaante hain, phir bhi doosra mauqa dete hain, lagta hai aap superhero hain.",
+            ],
+            [
+                "Aap ke baghair class adhoori hai. Teachers' Day mubarak, bas surprise test zara kam rakhiye ga.",
+                "Wada hai ke zyada sunein ge, kam bolein ge aur likhai saaf karein ge. World Teachers' Day mubarak!",
+                "Hamesha aise hi kamaal rahiye. Aap ko Teachers' Day bohat mubarak!",
+            ],
         ],
     },
     "Urdu": {
         "Heartfelt": [
-            "محترم {t}، آپ کی محنت، صبر اور رہنمائی نے مجھے سکھایا کہ علم صرف کتابوں میں نہیں، کردار میں بھی ہوتا ہے۔ آج میں جو کچھ ہوں، آپ کی تربیت اور دعاؤں کا نتیجہ ہے۔ عالمی یومِ اساتذہ مبارک!",
-            "{t}، آپ نے ہمیں صرف پڑھایا نہیں، جینا بھی سکھایا۔ اللہ آپ کو صحت، عزت اور ڈھیروں خوشیاں عطا فرمائے۔ یومِ اساتذہ مبارک!",
+            [
+                "محترم {t}، عالمی یومِ اساتذہ پر دل کی بس ایک ہی بات ہے: شکریہ، بہت بہت شکریہ۔",
+                "{t}، کچھ لوگ خاموشی سے ہماری زندگی کا رخ بدل دیتے ہیں۔ میرے لیے وہ آپ ہیں۔",
+                "محترم {t}، آج امتحانوں اور نمبروں کی نہیں، ان تمام مہربانیوں کی بات ہے جو آپ نے مجھ پر کیں۔",
+                "{t}، آپ ہی نے سب سے پہلے مجھے یقین دلایا کہ مجھ میں بہت کچھ کرنے کی صلاحیت ہے۔",
+            ],
+            [
+                "آپ نے کتاب کا سبق تو پڑھایا ہی، مگر اس سے بڑھ کر صبر، ایمانداری اور محنت کا سبق سکھایا۔",
+                "جن دنوں مجھے خود پر بھروسا نہ رہا، ان دنوں میں بھی آپ نے مجھ پر یقین رکھا۔",
+                "آپ کی ہر ٹوک میں فکر تھی، اور اب سمجھ آیا کہ آپ کی سختی دراصل آپ کی محبت تھی۔",
+                "آپ کی وجہ سے سوال پوچھنے کا ڈر ختم ہوا، اور اسی نے میرے سیکھنے کا انداز بدل دیا۔",
+                "میں زندگی میں جو کچھ بھی بنوں، اس میں آپ کی محنت اور دعاؤں کا ایک حصہ ہمیشہ شامل رہے گا۔",
+            ],
+            [
+                "اللہ آپ کو ہر اس بچے کے بدلے اجر دے جس کی آپ نے رہنمائی کی، اور آپ کو صحت، عزت اور خوشیاں عطا فرمائے۔",
+                "وعدہ ہے کہ آپ کی دی ہوئی تعلیم دوسروں تک پہنچانے کی پوری کوشش رہے گی۔ یومِ اساتذہ مبارک!",
+                "آپ کے لیے ہمیشہ عزت اور دعائیں۔ عالمی یومِ اساتذہ مبارک، اور ہر بات کا شکریہ۔",
+                "محبت، عزت اور بے پناہ شکرگزاری کے ساتھ، آپ کو یومِ اساتذہ بہت بہت مبارک ہو۔",
+            ],
         ],
         "Funny": [
-            "محترم {t}، ہوم ورک کم دینے کی گزارش اپنی جگہ، مگر سچ یہ ہے کہ آپ کے بغیر ہماری کلاس ادھوری ہے۔ یومِ اساتذہ مبارک!",
-        ],
-        "Short and sweet": [
-            "جو چراغ بن کر جلتے ہیں، وہی استاد کہلاتے ہیں۔ {t}، آپ کو یومِ اساتذہ مبارک!",
+            [
+                "محترم {t}، کئی دن سے یہ پیغام لکھنے کا سوچ رہے تھے، کیونکہ اضافی نمبر مانگے بغیر شکریہ کہنا بہت مشکل ہے۔",
+                "{t}، بریکنگ نیوز: آپ کے شاگردوں کو آخرکار معلوم ہو گیا کہ آپ ہمیشہ ٹھیک تھے۔",
+                "محترم {t}، پوری کلاس نے یہ لکھوایا ہے، اور پوری کلاس سے مراد میں ہوں، کیونکہ باقی سب ہوم ورک کاپی کرنے میں مصروف تھے۔",
+            ],
+            [
+                "شکریہ کہ جب ہم نے کہا کاپی کتے نے کھا لی، وین لیٹ تھی اور انٹرنیٹ بند تھا، وہ بھی ایک ہی ہفتے میں، تب بھی آپ پرسکون رہے۔",
+                "سب سے بور باب کو بھی آپ قابلِ برداشت بنا دیتے ہیں، اور یہ وہ ہنر ہے جو کسی کتاب میں نہیں ملتا۔",
+                "آپ نے ایک ہی ٹاپک پانچ بار سمجھایا اور ایک بار بھی آہ نہیں بھری، اس پر تو انعام بنتا ہے۔",
+                "آپ ہماری ہر بہانہ بازی جانتے ہیں، پھر بھی دوسرا موقع دیتے ہیں، لگتا ہے آپ سپر ہیرو ہیں۔",
+            ],
+            [
+                "آپ کے بغیر کلاس ادھوری ہے۔ یومِ اساتذہ مبارک، بس سرپرائز ٹیسٹ ذرا کم رکھیے گا۔",
+                "وعدہ ہے کہ زیادہ سنیں گے، کم بولیں گے اور لکھائی صاف کریں گے۔ عالمی یومِ اساتذہ مبارک!",
+                "ہمیشہ ایسے ہی کمال رہیے۔ آپ کو یومِ اساتذہ بہت مبارک!",
+            ],
         ],
     },
 }
+
+SHORT = {
+    "English": [
+        "Some people teach lessons, you taught life. Thank you, {t}. Happy Teachers' Day!",
+        "A good teacher lights a thousand candles without losing a single flame. Thank you, {t}!",
+        "Thank you, {t}, for turning confusion into confidence. Happy Teachers' Day!",
+        "{t}, your words are still guiding me long after the class has ended. Thank you.",
+        "To the one who believed in me first: thank you, {t}. Happy World Teachers' Day!",
+        "Every success of mine has your signature on it, {t}. Happy Teachers' Day!",
+        "Dear {t}, you are the reason I love learning. Thank you from the heart.",
+        "{t}, a teacher plants a seed and never knows where the forest ends. Thank you for planting me.",
+        "Respect and gratitude to you, {t}, today and always.",
+        "Happy Teachers' Day, {t}! You make the world better, one student at a time.",
+    ],
+    "Roman Urdu": [
+        "Jo chiragh ban kar jalte hain, wohi ustad kehlate hain. {t}, aap ko Teachers' Day mubarak!",
+        "{t}, aap ne uljhan ko aitemaad mein badal diya. Shukriya aur Teachers' Day mubarak!",
+        "{t}, class khatam ho gayi magar aap ki baatein aaj bhi rasta dikhati hain. Shukriya.",
+        "Jis ne sab se pehle mujh par yaqeen kiya, us ke naam: shukriya {t}. Teachers' Day mubarak!",
+        "Meri har kamyabi par aap ke dastkhat hain, {t}. Teachers' Day mubarak!",
+        "{t}, aap ki wajah se mujhe parhna acha lagta hai. Dil se shukriya.",
+        "{t}, ustad ek beej bota hai aur nahi jaanta ke jungle kahan tak jaye ga. Mujhe bone ka shukriya.",
+        "{t}, aap ke liye aaj aur hamesha izzat aur shukriya.",
+    ],
+    "Urdu": [
+        "جو چراغ بن کر جلتے ہیں، وہی استاد کہلاتے ہیں۔ {t}، آپ کو یومِ اساتذہ مبارک!",
+        "{t}، آپ نے الجھن کو اعتماد میں بدل دیا۔ شکریہ اور یومِ اساتذہ مبارک!",
+        "{t}، کلاس ختم ہو گئی مگر آپ کی باتیں آج بھی راستہ دکھاتی ہیں۔ شکریہ۔",
+        "جس نے سب سے پہلے مجھ پر یقین کیا، اس کے نام: شکریہ {t}۔ یومِ اساتذہ مبارک!",
+        "میری ہر کامیابی پر آپ کے دستخط ہیں، {t}۔ یومِ اساتذہ مبارک!",
+        "{t}، آپ کی وجہ سے مجھے پڑھنا اچھا لگتا ہے۔ دل سے شکریہ۔",
+        "{t}، استاد ایک بیج بوتا ہے اور نہیں جانتا کہ جنگل کہاں تک جائے گا۔ مجھے بونے کا شکریہ۔",
+    ],
+}
+TONES = ["Heartfelt", "Funny", "Short and sweet"]
+
+
+def compose(lang, tone, t):
+    """Builds a fresh wish: opening + middle + closing (hundreds of combinations)."""
+    if tone == "Short and sweet":
+        return random.choice(SHORT[lang]).format(t=t)
+    return " ".join(random.choice(part) for part in PARTS[lang][tone]).format(t=t)
+
+
+def reroll():
+    w = st.session_state.get("wish")
+    if not w:
+        return
+    for _ in range(10):
+        m = compose(w["lang"], w["tone"], w["t"])
+        if m != w["msg"]:
+            break
+    w["msg"] = m
+
 
 # One hadith is picked at random for each card.
 HADITHS = [
@@ -144,6 +300,25 @@ CARD_CSS = """
 .board.ur .hadith{text-align:right}
 .board.ur .from{text-align:left}
 .board.ur .head,.board.ur .to,.board.ur .msg,.board.ur .ps,.board.ur .hadith .q,.board.ur .from{line-height:2.1}
+.board{transform-origin:top center;transform:rotate(-.6deg);animation:drop 1.2s cubic-bezier(.2,.8,.3,1) both}
+.board::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.13;mix-blend-mode:multiply;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
+.board .tape{position:absolute;top:10px;width:110px;height:26px;z-index:2;background:rgba(255,226,140,.8);
+  box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.board .tape.l{left:-34px;transform:rotate(-40deg)}
+.board .tape.r{right:-34px;transform:rotate(40deg)}
+.board .star span{display:inline-block;animation:tw 2.6s ease-in-out infinite}
+.board .star span:nth-child(2){animation-delay:.5s;font-size:1.5em}
+.board .star span:nth-child(3){animation-delay:1s}
+.board .head,.board .to,.board .msg,.board .ps,.board .hadith,.board .from{animation:ink .9s ease both}
+.board .head{animation-delay:.9s}.board .to{animation-delay:1.3s}.board .msg{animation-delay:1.7s}
+.board .ps{animation-delay:2.2s}.board .hadith{animation-delay:2.6s}.board .from{animation-delay:3.1s}
+@keyframes drop{0%{opacity:0;transform:translateY(-60px) rotate(-5deg)}55%{opacity:1;transform:translateY(8px) rotate(1.6deg)}
+  78%{transform:translateY(-2px) rotate(-1.2deg)}100%{opacity:1;transform:translateY(0) rotate(-.6deg)}}
+@keyframes ink{from{opacity:0;filter:blur(3px);transform:translateY(8px)}to{opacity:1;filter:none;transform:none}}
+@keyframes tw{0%,100%{opacity:.35;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
+@media (prefers-reduced-motion:reduce){.board,.board *{animation:none!important}}
+@media print{.board,.board *{animation:none!important}.board{transform:none;box-shadow:none}}
 """
 
 PAGE_CSS = f"""
@@ -200,8 +375,9 @@ def card_html(w):
     school = f"<small>{esc(w['school'])}</small>" if w["school"].strip() else ""
     return f"""
 <div class="board{' ur' if ur else ''}" style="{style}">
+  <i class="tape l"></i><i class="tape r"></i>
   <span class="ribbon">{lt['ribbon']}</span>
-  <div class="star">&#9733;</div>
+  <div class="star"><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span></div>
   <div class="head">{lt['head']}</div>
   <div class="to">{lt['to'].format(t=esc(w['t']))}</div>
   <hr>
@@ -240,7 +416,7 @@ def card_pdf(w):
     c.setFillColor(HexColor("#E9F0EA")); c.rect(0, 0, W, H, fill=1, stroke=0)
     c.setFillColor(HexColor(th["frame"])); c.roundRect(m, m, W - 2 * m, H - 2 * m, 6, fill=1, stroke=0)
     c.setFillColor(HexColor(th["bg"])); c.rect(m + 14, m + 14, W - 2 * m - 28, H - 2 * m - 28, fill=1, stroke=0)
-    if th["img"] != "none":  # notebook rules
+    if th["img"] == NOTEBOOK_LINES:  # notebook rules
         c.setStrokeColor(HexColor("#D3DDEE")); c.setLineWidth(0.6)
         for yy in range(m + 40, int(H - m - 14), 24):
             c.line(m + 14, yy, W - m - 14, yy)
@@ -305,7 +481,7 @@ with st.form("wish_form"):
     teacher = c4.text_input("Teacher's name", placeholder="e.g. Ahmed")
     c5, c6 = st.columns(2)
     lang = c5.radio("Card language", LANGUAGES)
-    tone = c6.radio("Message style", list(MESSAGES["English"]))
+    tone = c6.radio("Message style", TONES)
     c7, c8 = st.columns(2)
     font = c7.selectbox("Writing style", list(FONT_STYLES))
     theme = c8.selectbox("Card colours", list(THEMES))
@@ -323,7 +499,7 @@ if go:
         h = random.choice(HADITHS)
         st.session_state["wish"] = dict(
             student=student, school=school, t=t, lang=lang, font=font, theme=theme, extra=extra,
-            msg=random.choice(MESSAGES[lang][tone]).format(t=t),
+            msg=compose(lang, tone, t), tone=tone,
             hadith_text=h["text"][lang], hadith_ref=h["ref"][lang],
         )
         wall().append({"student": student.strip(), "t": t})
@@ -341,6 +517,7 @@ if w:
         d1.download_button("Download as PDF", card_pdf(w), "teachers_day_card.pdf", "application/pdf", use_container_width=True)
         d2.download_button("Download as web page", card_file(w), "teachers_day_card.html", "text/html", use_container_width=True)
     d3.button("Make another card", on_click=lambda: st.session_state.pop("wish", None), use_container_width=True)
+    st.button("Write a different wish", on_click=reroll, use_container_width=True)
 
 st.markdown('<div class="wall-title">Wishes so far</div>', unsafe_allow_html=True)
 recent = wall()[-12:][::-1]
