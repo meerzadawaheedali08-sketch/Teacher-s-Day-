@@ -356,6 +356,12 @@ div[data-testid="stForm"] {{ background:#fff; border:2px solid #1E3B2C; border-r
 .credit {{ text-align:center; margin:2.2rem 0 .5rem; color:#3d5246; font-size:.9rem; }}
 .credit b {{ color:#1E3B2C; }}
 html, body, .stApp {{ overflow-x:hidden; }}
+.step {{ font-family:'Caveat',cursive; font-size:1.8rem; color:#1E3B2C; margin:1.3rem 0 .3rem; }}
+.fchips {{ display:flex; flex-wrap:wrap; gap:.4rem; margin:.2rem 0 .8rem; }}
+.fchip {{ border:2px solid #cfdacf; border-radius:8px; padding:.25rem .7rem; background:#fff; text-align:center;
+  line-height:1.5; color:#1E3B2C; }}
+.fchip small {{ display:block; font:600 .65rem 'Nunito',sans-serif; color:#5b6f62; }}
+.fchip.on {{ border-color:#1E3B2C; background:#FFF1C7; }}
 div[role="radiogroup"] label {{ padding:.25rem 0; }}
 @media (max-width:640px) {{
   .block-container {{ padding:1rem .8rem 3rem !important; }}
@@ -485,62 +491,116 @@ def card_pdf(w):
 
 
 # ---------- Page ----------
+LANG_LABEL = {"English": "🇬🇧 English", "Roman Urdu": "🇵🇰 Roman Urdu", "Urdu": "🇵🇰 اردو (Urdu)"}
+TONE_LABEL = {"Heartfelt": "💖 Heartfelt", "Funny": "😄 Funny", "Short and sweet": "✨ Short and sweet"}
+THEME_ICON = {
+    "Classic chalkboard": "🟢", "Pakistan green": "🇵🇰", "Midnight and gold": "🔵", "Maroon and gold": "🔴",
+    "School notebook": "📒", "Vintage parchment": "📜", "Royal purple": "🟣", "Ocean teal": "🌊",
+    "Rose garden": "🌸", "Starry night": "🌌",
+}
+OWN = "✍️ Write my own wish"
+
+
+def step(text):
+    st.markdown(f'<div class="step">{text}</div>', unsafe_allow_html=True)
+
+
+def font_chips(selected, lang):
+    chips = ""
+    for name, (fam, k, ufam, *_rest) in FONT_STYLES.items():
+        ur = lang == "Urdu"
+        sample = "شکریہ" if ur else "Thank you"
+        size = 1.3 * (0.8 if ur else k * 1.25)
+        chips += (f'<span class="fchip{" on" if name == selected else ""}" '
+                  f'style="font-family:{ufam if ur else fam};font-size:{size:.2f}rem">{sample}<small>{name}</small></span>')
+    return f'<div class="fchips">{chips}</div>'
+
+
+def new_options(lang, tone, t, n=4):
+    pool, tries = [], 0
+    while len(pool) < n and tries < 80:
+        m = compose(lang, tone, t)
+        if m not in pool:
+            pool.append(m)
+        tries += 1
+    return pool
+
+
+def card_section(student, school, honor, teacher, lang, tone, font, theme):
+    if lang == "Urdu":
+        t = f"{HONORIFICS[honor]} {teacher.strip()}".strip()
+    else:
+        t = teacher.strip() if honor == "Name only" else f"{honor} {teacher.strip()}"
+
+    sig = (lang, tone, t)
+    if st.session_state.get("sig") != sig:
+        st.session_state.update(sig=sig, opts=new_options(lang, tone, t), gen=st.session_state.get("gen", 0) + 1)
+
+    def more():
+        st.session_state.update(opts=new_options(lang, tone, t), gen=st.session_state["gen"] + 1)
+
+    step("4. Choose your wish")
+    opts = st.session_state["opts"]
+    pick = st.radio("Wish", opts + [OWN], key=f"pick_{st.session_state['gen']}", label_visibility="collapsed")
+    st.button("🔄 Show different wishes", on_click=more, use_container_width=True)
+    msg = opts[0]
+    if pick == OWN:
+        own = st.text_area("Your own wish", max_chars=400, placeholder="Write a message from your heart")
+        msg = own.strip() or opts[0]
+    else:
+        msg = pick
+    extra = st.text_input("Add one more line at the end (optional)", max_chars=140, placeholder="e.g. I will never forget your Friday quizzes")
+
+    h = HADITHS[st.session_state["gen"] % len(HADITHS)]  # changes whenever new wishes are shown
+    w = dict(student=student, school=school, t=t, lang=lang, tone=tone, font=font, theme=theme, extra=extra,
+             msg=msg, hadith_text=h["text"][lang], hadith_ref=h["ref"][lang])
+
+    step("5. Your card")
+    st.markdown(card_html(w), unsafe_allow_html=True)
+    st.write("")
+    if lang == "Urdu":
+        st.download_button("Download card (web page)", card_file(w), "teachers_day_card.html", "text/html", use_container_width=True)
+        st.info("For a PDF of an Urdu card: open the downloaded web page and press the Save as PDF button on top.")
+    else:
+        d1, d2 = st.columns(2)
+        d1.download_button("Download as PDF", card_pdf(w), "teachers_day_card.pdf", "application/pdf", use_container_width=True)
+        d2.download_button("Download as web page", card_file(w), "teachers_day_card.html", "text/html", use_container_width=True)
+    if st.button("🎈 Post my thanks to the wishes wall", use_container_width=True):
+        wall().append({"student": student.strip(), "t": t})
+        st.balloons()
+
+
 st.markdown(
     """<div class="hero">
 <div class="icon">📚</div>
 <div class="pill">5 OCTOBER &nbsp;|&nbsp; WORLD TEACHERS' DAY</div>
 <h1>Say thank you to your teacher</h1>
-<p>Pick a language, a writing style and a card colour. Get a card with a heartfelt message and a hadith on honouring teachers.</p>
+<p>Choose everything yourself and watch the card change as you go.</p>
 </div>""",
     unsafe_allow_html=True,
 )
 
-with st.form("wish_form"):
-    c1, c2 = st.columns(2)
-    student = c1.text_input("Your name", placeholder="e.g. Hamza Ali")
-    school = c2.text_input("Class or school (optional)", placeholder="e.g. Class 9, Government High School")
-    c3, c4 = st.columns([1, 2])
-    honor = c3.selectbox("You call your teacher", list(HONORIFICS))
-    teacher = c4.text_input("Teacher's name", placeholder="e.g. Ahmed")
-    c5, c6 = st.columns(2)
-    lang = c5.radio("Card language", LANGUAGES)
-    tone = c6.radio("Message style", TONES)
-    c7, c8 = st.columns(2)
-    font = c7.selectbox("Writing style", list(FONT_STYLES))
-    theme = c8.selectbox("Card colours", list(THEMES))
-    extra = st.text_input("Add your own line (optional)", max_chars=140, placeholder="e.g. I will never forget your Friday quizzes")
-    go = st.form_submit_button("Create my card", use_container_width=True)
+step("1. About you and your teacher")
+c1, c2 = st.columns(2)
+student = c1.text_input("Your name", placeholder="e.g. Hamza Ali")
+school = c2.text_input("Class or school (optional)", placeholder="e.g. Class 9, Government High School")
+c3, c4 = st.columns([1, 2])
+honor = c3.selectbox("You call your teacher", list(HONORIFICS))
+teacher = c4.text_input("Teacher's name", placeholder="e.g. Ahmed")
 
-if go:
-    if not student.strip() or not teacher.strip():
-        st.error("Please enter your name and your teacher's name.")
-    else:
-        if lang == "Urdu":
-            t = f"{HONORIFICS[honor]} {teacher.strip()}".strip()
-        else:
-            t = teacher.strip() if honor == "Name only" else f"{honor} {teacher.strip()}"
-        h = random.choice(HADITHS)
-        st.session_state["wish"] = dict(
-            student=student, school=school, t=t, lang=lang, font=font, theme=theme, extra=extra,
-            msg=compose(lang, tone, t), tone=tone,
-            hadith_text=h["text"][lang], hadith_ref=h["ref"][lang],
-        )
-        wall().append({"student": student.strip(), "t": t})
-        st.balloons()
+step("2. Language and message style")
+lang = st.pills("Card language", LANGUAGES, default="English", format_func=LANG_LABEL.get, key="lang") or "English"
+tone = st.pills("Message style", TONES, default="Heartfelt", format_func=TONE_LABEL.get, key="tone") or "Heartfelt"
 
-w = st.session_state.get("wish")
-if w:
-    st.markdown(card_html(w), unsafe_allow_html=True)
-    st.write("")
-    d1, d2, d3 = st.columns(3)
-    if w["lang"] == "Urdu":
-        d1.download_button("Download card (web page)", card_file(w), "teachers_day_card.html", "text/html", use_container_width=True)
-        st.info("For a PDF of an Urdu card: open the downloaded web page and press the Save as PDF button on top.")
-    else:
-        d1.download_button("Download as PDF", card_pdf(w), "teachers_day_card.pdf", "application/pdf", use_container_width=True)
-        d2.download_button("Download as web page", card_file(w), "teachers_day_card.html", "text/html", use_container_width=True)
-    d3.button("Make another card", on_click=lambda: st.session_state.pop("wish", None), use_container_width=True)
-    st.button("Write a different wish", on_click=reroll, use_container_width=True)
+step("3. Look of your card")
+font = st.pills("Writing style", list(FONT_STYLES), default="Chalk handwriting", key="font") or "Chalk handwriting"
+st.markdown(font_chips(font, lang), unsafe_allow_html=True)
+theme = st.pills("Card colours", list(THEMES), default="Classic chalkboard", format_func=lambda k: f"{THEME_ICON[k]} {k}", key="theme") or "Classic chalkboard"
+
+if student.strip() and teacher.strip():
+    card_section(student, school, honor, teacher, lang, tone, font, theme)
+else:
+    st.info("Enter your name and your teacher's name above. Wishes and your card will appear right here.")
 
 st.markdown('<div class="wall-title">Wishes so far</div>', unsafe_allow_html=True)
 recent = wall()[-12:][::-1]
